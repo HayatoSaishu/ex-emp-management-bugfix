@@ -32,6 +32,16 @@ public class EmployeeService {
 		return employeeList;
 	}
 	
+	public List<Employee> searchByNameLike(String name){
+		if(name == null) {
+			List<Employee> empolyeeList = employeeRepository.findAll();
+			return empolyeeList;
+		} else {
+			List<Employee> employeeList = employeeRepository.findByNameLike(name);
+			return employeeList;
+		}
+	}
+	
 	/**
 	 * 従業員情報を取得します.
 	 * 
@@ -52,4 +62,5 @@ public class EmployeeService {
 	public void update(Employee employee) {
 		employeeRepository.update(employee);
 	}
+
 }

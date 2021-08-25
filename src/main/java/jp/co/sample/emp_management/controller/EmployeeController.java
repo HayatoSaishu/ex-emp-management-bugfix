@@ -52,6 +52,17 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
+	
+	@RequestMapping("/search-name")
+	public String searchNameLike(String name, Model model) {
+		List<Employee> employeeList = employeeService.searchByNameLike(name);
+		if(employeeList == null) {
+			employeeList = employeeService.showList();
+			model.addAttribute("blankMessage", employeeList);
+		}
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
 
 	
 	/////////////////////////////////////////////////////
