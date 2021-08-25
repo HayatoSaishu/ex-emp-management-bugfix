@@ -40,6 +40,12 @@ public class AdministratorService {
 		return administrator;
 	}
 	
+	/**
+	 * メールアドレスが既にDBに存在するか確認する.
+	 * 
+	 * @param mailAddress メールアドレス
+	 * @return　管理者情報　存在しない場合はnullが返ります
+	 */
 	public Administrator checkMailAddress(String mailAddress) {
 		Administrator administrator = administratorRepository.findByMailAddress(mailAddress);
 		return administrator;
