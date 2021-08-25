@@ -85,7 +85,7 @@ public class EmployeeRepository {
 	}
 	
 	/**
-	 * 従業員一覧を名前の曖昧で取得する.
+	 * 従業員一覧を名前の曖昧検索で取得する.
 	 * 
 	 * @param name 従業員名
 	 * @return 従業員情報のリスト

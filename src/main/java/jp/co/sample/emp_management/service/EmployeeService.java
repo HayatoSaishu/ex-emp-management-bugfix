@@ -32,6 +32,12 @@ public class EmployeeService {
 		return employeeList;
 	}
 	
+	/**
+	 * 従業員情報を名前の曖昧検索で取得します.
+	 * 
+	 * @param name フォームに入力された名前
+	 * @return 従業員情報リスト
+	 */
 	public List<Employee> searchByNameLike(String name){
 		if(name == null) {
 			List<Employee> empolyeeList = employeeRepository.findAll();
