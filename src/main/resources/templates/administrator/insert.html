@@ -86,9 +86,6 @@
 										<label for="confirm_password">
 											確認用パスワード:
 										</label>
-										<div class="alert alert-danger" th:if="${passwordErrorMessage}">
-											<p th:text="${passwordErrorMessage}"></p>
-										</div>
 										<label th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error-messages">
 											確認用パスワードを入力してください
 										</label>
