@@ -59,6 +59,12 @@
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+				
+				<form th:action="@{/employee/search-name}" method="post">
+					名前:
+					<input type="text" name="name">
+					<button type="submit">検索</button>
+ 				</form>
 
 <!-- ここから上を編集する必要はありません -->
 
