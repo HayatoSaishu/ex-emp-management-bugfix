@@ -72,12 +72,17 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
-	public String insert(InsertAdministratorForm form) {
-		Administrator administrator = new Administrator();
-		// フォームからドメインにプロパティ値をコピー
-		BeanUtils.copyProperties(form, administrator);
-		administratorService.insert(administrator);
-		return "employee/list";
+	public String insert(InsertAdministratorForm form, Model model) {
+		Administrator administrator = administratorService.checkMailAddress(form.getMailAddress());
+		if(administrator == null) {
+			administrator = new Administrator(); 
+			BeanUtils.copyProperties(form, administrator);
+			administratorService.insert(administrator);
+			return "employee/list";
+		} else {
+			model.addAttribute("errorMessage", "メールアドレスが既に登録されています");
+			return toInsert();
+		}
 	}
 
 	/////////////////////////////////////////////////////
