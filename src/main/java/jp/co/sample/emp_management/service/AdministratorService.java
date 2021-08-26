@@ -31,6 +31,7 @@ public class AdministratorService {
 	 */
 	public void insert(Administrator administrator) {
 		administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+		System.out.println(administrator);
 		administratorRepository.insert(administrator);
 	}
 	
@@ -42,6 +43,7 @@ public class AdministratorService {
 	 */
 	public Administrator login(String mailAddress, String password) {
 		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, password);
+		System.out.println(administrator);
 		return administrator;
 	}
 }

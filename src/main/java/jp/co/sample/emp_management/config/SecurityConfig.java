@@ -8,31 +8,28 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.formLogin()
-			.loginProcessingUrl("/login")
-			.loginPage("/")
-			.failureUrl("/")
-			.defaultSuccessUrl("/employee/showList")
-			.usernameParameter("mailAddress")
-			.passwordParameter("password")
-			.and()
-			.logout()
-			.logoutSuccessUrl("/");
+		http.authorizeRequests().anyRequest().permitAll();
+		
+		http.formLogin()
+        .loginPage("/")
+        .loginProcessingUrl("/authenticate")
+        .usernameParameter("mailAddress")
+        .passwordParameter("password")
+        .defaultSuccessUrl("/employee/showList")
+        .permitAll();
 	}
-	
+
 	@Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }
