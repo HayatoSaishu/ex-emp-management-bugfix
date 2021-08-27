@@ -33,6 +33,22 @@ public class EmployeeService {
 	}
 	
 	/**
+	 * 従業員情報を名前の曖昧検索で取得します.
+	 * 
+	 * @param name フォームに入力された名前
+	 * @return 従業員情報リスト
+	 */
+	public List<Employee> searchByNameLike(String name){
+		if(name == null) {
+			List<Employee> empolyeeList = employeeRepository.findAll();
+			return empolyeeList;
+		} else {
+			List<Employee> employeeList = employeeRepository.findByNameLike(name);
+			return employeeList;
+		}
+	}
+	
+	/**
 	 * 従業員情報を取得します.
 	 * 
 	 * @param id ID
@@ -52,4 +68,5 @@ public class EmployeeService {
 	public void update(Employee employee) {
 		employeeRepository.update(employee);
 	}
+
 }
