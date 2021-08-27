@@ -52,6 +52,25 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
+	
+	/**
+	 * 	曖昧検索に一致する従業員一覧を表示します.
+	 * 
+	 * @param name　フォームに入力された名前
+	 * @param model　モデル
+	 * @return 従業員情報のリスト
+	 */
+	@RequestMapping("/search-name")
+	public String searchNameLike(String name, Model model) {
+		List<Employee> employeeList = employeeService.searchByNameLike(name);
+		if(employeeList.size() == 0) {
+			employeeList = employeeService.showList();
+			model.addAttribute("blankMessage", "1件もありませんでした");
+			model.addAttribute("employeeList", employeeList);
+		}
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
 
 	
 	/////////////////////////////////////////////////////
