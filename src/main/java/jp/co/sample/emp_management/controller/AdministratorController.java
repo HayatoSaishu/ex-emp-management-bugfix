@@ -28,7 +28,7 @@ public class AdministratorController {
 
 	@Autowired
 	private AdministratorService administratorService;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -41,7 +41,7 @@ public class AdministratorController {
 	public InsertAdministratorForm setUpInsertAdministratorForm() {
 		return new InsertAdministratorForm();
 	}
-	
+
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -68,14 +68,18 @@ public class AdministratorController {
 	/**
 	 * 管理者情報を登録します.
 	 * 
-	 * @param form
-	 *            管理者情報用フォーム
+	 * @param form 管理者情報用フォーム
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
-		if(result.hasErrors() || form.getPassword().equals(form.getConfirmPassword())) {
-			result.rejectValue("confirmPassword","confirmPassword", "パスワードが一致しません");
+		if (result.hasErrors() && !(form.getPassword().equals(form.getConfirmPassword()))) {
+			result.rejectValue("confirmPassword", "confirmPassword", "パスワードが一致しません");
+			return toInsert();
+		} else if (result.hasErrors()) {
+			return toInsert();
+		} else if (!(form.getPassword().equals(form.getConfirmPassword()))) {
+			result.rejectValue("confirmPassword", "confirmPassword", "パスワードが一致しません");
 			return toInsert();
 		} else {
 			Administrator administrator = new Administrator();
@@ -85,7 +89,6 @@ public class AdministratorController {
 			return "redirect:/";
 		}
 	}
-
 
 	/////////////////////////////////////////////////////
 	// ユースケース：ログインをする
@@ -103,14 +106,12 @@ public class AdministratorController {
 	/**
 	 * ログインします.
 	 * 
-	 * @param form
-	 *            管理者情報用フォーム
-	 * @param result
-	 *            エラー情報格納用オブッジェクト
+	 * @param form   管理者情報用フォーム
+	 * @param result エラー情報格納用オブッジェクト
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@RequestMapping("/login")
-	public String login(LoginForm form, BindingResult result,HttpSession session, Model model) {
+	public String login(LoginForm form, BindingResult result, HttpSession session, Model model) {
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
 		if (administrator == null) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
@@ -119,7 +120,7 @@ public class AdministratorController {
 		session.setAttribute("administratorName", administrator.getName());
 		return "forward:/employee/showList";
 	}
-	
+
 	/////////////////////////////////////////////////////
 	// ユースケース：ログアウトをする
 	/////////////////////////////////////////////////////
@@ -133,5 +134,5 @@ public class AdministratorController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
 }
