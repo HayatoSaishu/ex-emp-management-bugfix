@@ -74,19 +74,15 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
-		if(result.hasErrors()) {
+		if(result.hasErrors() || form.getPassword().equals(form.getConfirmPassword())) {
+			result.rejectValue("confirmPassword","confirmPassword", "パスワードが一致しません");
 			return toInsert();
-		}
-    // TODO 伊賀コメント　サーバー側でコンフリクト解消しましたが、何を残せば良いかが判断できませんでしたので以下正しく修正をお願いします
-		Administrator administrator = new Administrator();
-		// フォームからドメインにプロパティ値をコピー
-		if(form.getPassword().equals(form.getConfirmPassword())) {
+		} else {
+			Administrator administrator = new Administrator();
+			// フォームからドメインにプロパティ値をコピー
 			BeanUtils.copyProperties(form, administrator);
 			administratorService.insert(administrator);
 			return "redirect:/";
-		} else {
-			result.rejectValue("confirmPassword","confirmPassword", "パスワードが一致しません");
-			return toInsert();	
 		}
 	}
 
