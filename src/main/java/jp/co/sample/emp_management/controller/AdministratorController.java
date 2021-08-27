@@ -77,6 +77,7 @@ public class AdministratorController {
 		if(result.hasErrors()) {
 			return toInsert();
 		}
+    // TODO 伊賀コメント　サーバー側でコンフリクト解消しましたが、何を残せば良いかが判断できませんでしたので以下正しく修正をお願いします
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		if(form.getPassword().equals(form.getConfirmPassword())) {
@@ -88,6 +89,7 @@ public class AdministratorController {
 			return toInsert();	
 		}
 	}
+
 
 	/////////////////////////////////////////////////////
 	// ユースケース：ログインをする
