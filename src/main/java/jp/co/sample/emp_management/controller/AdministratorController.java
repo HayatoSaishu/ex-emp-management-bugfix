@@ -68,18 +68,22 @@ public class AdministratorController {
 	/**
 	 * 管理者情報を登録します.
 	 * 
-	 * @param form
-	 *            管理者情報用フォーム
+	 * @param form 管理者情報用フォーム
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 		Administrator administrator = administratorService.checkMailAddress(form.getMailAddress());
-		if(result.hasErrors() || administrator != null) {
+		if (result.hasErrors() && administrator != null) {
+			result.rejectValue("mailAddress", "mailAddress", "既にメールアドレスが登録されています");
+			return toInsert();
+		} else if (result.hasErrors()) {
+			return toInsert();
+		} else if (administrator != null) {
 			result.rejectValue("mailAddress", "mailAddress", "既にメールアドレスが登録されています");
 			return toInsert();
 		} else {
-			administrator = new Administrator(); 
+			administrator = new Administrator();
 			BeanUtils.copyProperties(form, administrator);
 			administratorService.insert(administrator);
 			return "redirect:/";
