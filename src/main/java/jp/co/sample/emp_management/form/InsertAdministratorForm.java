@@ -19,6 +19,7 @@ public class InsertAdministratorForm {
 	@NotBlank(message = "パスワードを入力してください")
 	private String password;
 	/** 確認用パスワード */
+	@NotBlank(message = "確認用パスワードを入力してください")
 	private String confirmPassword;
 
 	/**
