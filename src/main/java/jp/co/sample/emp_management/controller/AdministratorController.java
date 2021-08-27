@@ -74,6 +74,9 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
+		if(result.hasErrors()) {
+			return toInsert();
+		}
 		Administrator administrator = administratorService.checkMailAddress(form.getMailAddress());
 		if(administrator == null) {
 			administrator = new Administrator(); 
