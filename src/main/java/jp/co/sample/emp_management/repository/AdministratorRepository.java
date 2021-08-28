@@ -35,7 +35,7 @@ public class AdministratorRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-
+	
 	/**
 	 * 主キーから管理者情報を取得します.
 	 * 
